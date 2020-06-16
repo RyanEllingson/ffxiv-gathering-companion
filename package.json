@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/RyanEllingson/ffxiv-gathering-companion/issues"
   },
-  "homepage": "https://github.com/RyanEllingson/ffxiv-gathering-companion#readme"
+  "homepage": "https://github.com/RyanEllingson/ffxiv-gathering-companion#readme",
+  "dependencies": {
+    "jest": "^26.0.1"
+  }
 }
