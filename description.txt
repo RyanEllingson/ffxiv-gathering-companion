@@ -1,0 +1,7 @@
+Register - add a user to database
+Login - log in as existing user in database
+Add alarm - add an alarm to the database for currently logged-in user for chosen gathering item
+Get all gatherables - query database for all gatherable items
+Get all botany gatherables - query database for all botany gatherables
+Get all mining gatherables - query database for all mining gatherables
+Search for collectable - query database for all items whose names are similar to input string
