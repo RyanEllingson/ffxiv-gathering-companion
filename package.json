@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/RyanEllingson/ffxiv-gathering-companion#readme",
   "dependencies": {
-    "jest": "^26.0.1"
+    "express": "^4.17.1",
+    "jest": "^26.0.1",
+    "mysql": "^2.18.1"
   }
 }
