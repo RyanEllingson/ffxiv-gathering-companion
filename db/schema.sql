@@ -8,7 +8,7 @@ CREATE TABLE items
     coordinates varchar(255) NOT NULL,
     aetheryte varchar(255),
     start_time varchar(255) NOT NULL,
-    end_time varchar(255) NOT NULL,
+    duration int NOT NULL,
     node_type varchar(255) NOT NULL,
     PRIMARY KEY (id)
 );
