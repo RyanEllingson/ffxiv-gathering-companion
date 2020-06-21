@@ -1,0 +1,33 @@
+{
+    "development": {
+      "user": "root",
+      "password": "root",
+      "database": "gathering_db",
+      "host": "localhost",
+      "port": "3306",
+      "dialect": "mysql"
+    },
+    "test": {
+      "user": "qmt9etxme0ky1lm3",
+      "password": "zr3loj57h2yns9em",
+      "database": "rvkjancnj060wvim",
+      "host": "sq65ur5a5bj7flas.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+      "port": "3306",
+      "socketPath": "~travis/.my.cnf",
+      "dialect": "mysql",
+      "logging": false
+    },
+    "ci": {
+      "user": "qmt9etxme0ky1lm3",
+      "password": "zr3loj57h2yns9em",
+      "database": "rvkjancnj060wvim",
+      "host": "sq65ur5a5bj7flas.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+      "socketPath": "~travis/.my.cnf",
+      "dialect": "mysql",
+      "logging": false
+    },
+    "production": {
+      "use_env_variable": true,
+      "dialect": "mysql"
+    }
+  }
