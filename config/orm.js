@@ -1,5 +1,6 @@
 const connection = require("./connection");
 const Validator = require("validator");
+const crypto = require("crypto");
 
 const validateRegisterInput = require("../validation/register");
 
@@ -97,7 +98,9 @@ const orm = {
                 return reject(errors);
             }
             const normalizedEmail = Validator.normalizeEmail(userInfo.email);
-            connection.query(queryString, { email: normalizedEmail, password: userInfo.password }, function(err, result) {
+            const salt = crypto.randomBytes(8).toString("hex");
+            const hashedPass = crypto.scryptSync(userInfo.password, salt, 64).toString("hex");
+            connection.query(queryString, { email: normalizedEmail, password: `${hashedPass}.${salt}` }, function(err, result) {
                 if (err) {
                     return reject(err);
                 }
