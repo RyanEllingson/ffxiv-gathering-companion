@@ -89,14 +89,15 @@ describe("API routes", () => {
         });
     });
     describe("Register new user", () => {
-        it("should add a new user to the db", async () => {
+        it("should add a new user to the db and attach cookie session to request", async () => {
             await clearUsers();
             req = {
                 body: {
                     email: "test@test.com",
                     password: "password",
                     password2: "password"
-                }
+                },
+                session: {}
             };
 
             res = {
@@ -104,6 +105,7 @@ describe("API routes", () => {
             };
 
             await orm.registerAndReturnUser(req, res);
+            expect(req.session.userId).toBe(res.json.mock.calls[0][0].insertId);
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
         });
         it("should return an 'email is required' error", async () => {
