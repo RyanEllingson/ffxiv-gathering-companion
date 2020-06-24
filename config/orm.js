@@ -112,6 +112,7 @@ const orm = {
     registerAndReturnUser: async function(req, res) {
         try {
             const result = await orm.registerUser(req.body);
+            req.session.userId = result.insertId;
             res.json(result);
         } catch (err) {
             res.json({...err, error: true});
