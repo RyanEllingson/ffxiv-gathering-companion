@@ -27,7 +27,7 @@ const validateRegisterInput = async function(data, connection) {
 
     const email = data.email ? data.email : "";
     const password = data.password ? data.password : "";
-    const password2 = data.password2 ? data.password : "";
+    const password2 = data.password2 ? data.password2 : "";
 
     if (Validator.isEmpty(email)) {
         errors.email = "Email field is required";
@@ -40,15 +40,18 @@ const validateRegisterInput = async function(data, connection) {
         errors.email = "Email already in use";
     }
     
-
     if (Validator.isEmpty(password)) {
         errors.password = "Password field is required";
+    }
+
+    if (!Validator.equals(password, password2)) {
+        errors.password2 = "Passwords must match";
     }
 
     if (Validator.isEmpty(password2)) {
         errors.password2 = "Confirm password field is required";
     }
-
+    
     return {
         errors,
         isValid: isEmpty(errors)

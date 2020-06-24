@@ -13,6 +13,18 @@ describe("API routes", () => {
             // Connection terminated
         });
     });
+    const clearUsers = function() {
+        const queryString = "DELETE FROM users";
+        const dbQuery = function(resolve, reject) {
+            connection.query(queryString, function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(result);
+            });
+        };
+        return new Promise (dbQuery);
+    }
     describe("Search for item", () => {
         it("should find Fire Cluster in the db", async () => {
             req = {
@@ -75,6 +87,124 @@ describe("API routes", () => {
             expect(res.json.mock.calls[0][0].length).toBe(1);
             expect(res.json.mock.calls[0][0][0].item_name).toBe("Raw Ruby");
         });
+    });
+    describe("Register new user", () => {
+        it("should add a new user to the db", async () => {
+            await clearUsers();
+            req = {
+                body: {
+                    email: "test@test.com",
+                    password: "password",
+                    password2: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
+        });
+        it("should return an 'email is required' error", async () => {
+            req = {
+                body: {
+                    password: "password",
+                    password2: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email field is required");
+        });
+        it("should return an 'email is invalid' error", async () => {
+            req = {
+                body: {
+                    email: "adklfjas;dfj",
+                    password: "password",
+                    password2: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email is invalid");
+        });
+        it("should return an 'email already is use' error", async () => {
+            req = {
+                body: {
+                    email: "test@test.com",
+                    password: "password",
+                    password2: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email already in use");
+        });
+        it("should return a 'password field required' error", async () => {
+            req = {
+                body: {
+                    email: "test2@test.com",
+                    password2: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].password).toBe("Password field is required");
+        });
+        it("should return a 'confirm password field required' error", async () => {
+            req = {
+                body: {
+                    email: "test2@test.com",
+                    password: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].password2).toBe("Confirm password field is required");
+        });
+        it("should return a 'passwords must match' error", async () => {
+            req = {
+                body: {
+                    email: "test2@test.com",
+                    password: "password",
+                    password2: ";aslkdjf"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.registerAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].password2).toBe("Passwords must match");
+        })
     });
 });
 
