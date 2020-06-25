@@ -1,5 +1,6 @@
 process.env.NODE_ENV = "test";
 const { orm, connection } = require("../config/orm");
+const crypto = require("crypto");
 
 describe("API routes", () => {
     let req = {};
@@ -105,7 +106,10 @@ describe("API routes", () => {
             };
 
             await orm.registerAndReturnUser(req, res);
-            expect(req.session.userId).toBe(res.json.mock.calls[0][0].insertId);
+            const hash = crypto.createHash("sha256");
+            hash.update(res.json.mock.calls[0][0].insertId.toString());
+            const hashedId = hash.digest("hex");
+            expect(req.session.userId).toBe(hashedId);
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
         });
         it("should return an 'email is required' error", async () => {
@@ -207,6 +211,105 @@ describe("API routes", () => {
             expect(res.json.mock.calls[0][0].error).toBe(true);
             expect(res.json.mock.calls[0][0].password2).toBe("Passwords must match");
         })
+    });
+    describe("Logout", () => {
+        it("should remove cookie session from request", () => {
+            req = {
+                session: {id: "whatever"}
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            orm.logout(req, res);
+            expect(req.session).toBeNull();
+            expect(res.json.mock.calls[0][0].loggedOut).toBe(true);
+        });
+    });
+    describe("Login as existing user", () => {
+        it("should successfully log in and attach cookie session to request", async () => {
+            req = {
+                body: {
+                    email: "test@test.com",
+                    password: "password"
+                },
+                session: {}
+            };
+    
+            res = {
+                json: jest.fn()
+            };
+    
+            await orm.loginAndReturnUser(req, res);
+            const hash = crypto.createHash("sha256");
+            hash.update(res.json.mock.calls[0][0].id.toString());
+            const hashedId = hash.digest("hex");
+            expect(req.session.userId).toBe(hashedId);
+            expect(res.json.mock.calls[0][0].email).toBe("test@test.com");
+        });
+        it("should return an 'email is required' error", async () => {
+            req = {
+                body: {
+                    password: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.loginAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email field is required");
+        });
+        it("should return an 'email is invalid' error", async () => {
+            req = {
+                body: {
+                    email: "df;asldjfa;ldj",
+                    password: "password"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.loginAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email is invalid");
+        });
+        it("should return an 'email not found' error", async() => {
+            req = {
+                body: {
+                    email: "blah@blah.com",
+                    password: "whatever"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.loginAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email not found");
+        })
+        it("should return a 'password is required' error", async () => {
+            req = {
+                body: {
+                    email: "test@test.com"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.loginAndReturnUser(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].password).toBe("Password field is required");
+        });
     });
 });
 

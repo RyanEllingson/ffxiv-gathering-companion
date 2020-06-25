@@ -3,6 +3,9 @@ const Validator = require("validator");
 const crypto = require("crypto");
 
 const validateRegisterInput = require("../validation/register");
+const validateLoginInput = require("../validation/login");
+
+
 
 const orm = {
     findItem: function(req) {
@@ -112,12 +115,56 @@ const orm = {
     registerAndReturnUser: async function(req, res) {
         try {
             const result = await orm.registerUser(req.body);
-            req.session.userId = result.insertId;
+            const hash = crypto.createHash("sha256");
+            hash.update(result.insertId.toString());
+            const hashedId = hash.digest("hex");
+            req.session.userId = hashedId;
             res.json(result);
         } catch (err) {
             res.json({...err, error: true});
         }
-        
+    },
+    login: function(loginInfo) {
+        const queryString = "SELECT * FROM users WHERE email = ?";
+        const dbQuery = async function(resolve, reject) {
+            const {errors, isValid} = await validateLoginInput(loginInfo);
+            if (!isValid) {
+                return reject(errors);
+            }
+            const normalizedEmail = Validator.normalizeEmail(loginInfo.email);
+            connection.query(queryString, [normalizedEmail], function(err, result) {
+                if (err) {
+                    console.log("here!");
+                    return reject(err);
+                }
+                if (result.length < 1) {
+                    return reject({email: "Email not found"});
+                }
+                const [hash, salt] = result[0].password.split(".");
+                const hashedPass = crypto.scryptSync(loginInfo.password, salt, 64).toString("hex");
+                if (!Validator.equals(hash, hashedPass)) {
+                    return reject({password: "Incorrect password"});
+                }
+                return resolve(result[0]);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    loginAndReturnUser: async function(req, res) {
+        try {
+            const result = await orm.login(req.body);
+            const hash = crypto.createHash("sha256");
+            hash.update(result.id.toString());
+            const hashedId = hash.digest("hex");
+            req.session.userId = hashedId;
+            res.json(result);
+        } catch (err) {
+            res.json({...err, error: true});
+        }
+    },
+    logout: function(req, res) {
+        req.session = null;
+        res.json({loggedOut: true});
     }
 };
 
