@@ -2,7 +2,7 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const { orm } = require("./config/orm");
 
-const cookieKey = process.env.COOKIE_KEY || "blahblah";
+const cookieKey = process.env.COOKIE_KEY || ";ljoisdufadnruoqerb";
 
 const app = express();
 
@@ -19,6 +19,7 @@ app.get("/api/items/botany", orm.getAndReturnBotanyItems);
 app.get("/api/items/mining", orm.getAndReturnMiningItems);
 app.get("/api/items/:item", orm.findAndReturnItem);
 app.post("/api/register", orm.registerAndReturnUser);
+app.post("/api/login", orm.loginAndReturnUser);
 
 app.listen(PORT, function() {
     console.log("App listening on PORT: " + PORT);
