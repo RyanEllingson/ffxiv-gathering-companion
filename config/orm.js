@@ -119,6 +119,7 @@ const orm = {
             hash.update(result.insertId.toString());
             const hashedId = hash.digest("hex");
             req.session.userId = hashedId;
+            req.session.email = req.body.email;
             res.json(result);
         } catch (err) {
             res.json({...err, error: true});
@@ -126,8 +127,8 @@ const orm = {
     },
     login: function(loginInfo) {
         const queryString = "SELECT * FROM users WHERE email = ?";
-        const dbQuery = async function(resolve, reject) {
-            const {errors, isValid} = await validateLoginInput(loginInfo);
+        const dbQuery = function(resolve, reject) {
+            const {errors, isValid} = validateLoginInput(loginInfo);
             if (!isValid) {
                 return reject(errors);
             }
@@ -157,6 +158,7 @@ const orm = {
             hash.update(result.id.toString());
             const hashedId = hash.digest("hex");
             req.session.userId = hashedId;
+            req.session.email = result.email;
             res.json(result);
         } catch (err) {
             res.json({...err, error: true});
@@ -165,6 +167,48 @@ const orm = {
     logout: function(req, res) {
         req.session = null;
         res.json({loggedOut: true});
+    },
+    findId: function(email) {
+        const queryString = "SELECT id FROM users WHERE email = ?";
+        const dbQuery = function(resolve, reject) {
+            connection.query(queryString, email, function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                if (result.length < 1) {
+                    return reject("Email not found");
+                }
+                return resolve(result[0].id);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    createAlarm: function(req, userId) {
+        const queryString = "INSERT INTO alarms SET ?";
+        const dbQuery = async function(resolve, reject) {
+            const hash = crypto.createHash("sha256");
+            hash.update(userId.toString());
+            const hashedId = hash.digest("hex");
+            if (req.session.userId !== hashedId) {
+                return reject({email: "Invalid credentials"});
+            }
+            connection.query(queryString, { user_id: userId, item_id: req.body.itemId, notes: req.body.notes}, function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(result);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    createAndReturnAlarm: async function(req, res) {
+        try {
+            const userId = await orm.findId(req.body.email);
+            const result = await orm.createAlarm(req, userId);
+            res.json(result);
+        } catch (err) {
+            res.json({...err, error: true});
+        }
     }
 };
 

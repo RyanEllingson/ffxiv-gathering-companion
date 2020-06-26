@@ -9,6 +9,7 @@ describe("API routes", () => {
         req = {};
         res = {};
     });
+    let sessionId;
     afterAll(() => {
         connection.end(function(err) {
             // Connection terminated
@@ -24,8 +25,20 @@ describe("API routes", () => {
                 return resolve(result);
             });
         };
-        return new Promise (dbQuery);
-    }
+        return new Promise(dbQuery);
+    };
+    const clearAlarms = function() {
+        const queryString = "DELETE FROM alarms";
+        const dbQuery = function(resolve, reject) {
+            connection.query(queryString, function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(result);
+            });
+        };
+        return new Promise(dbQuery);
+    };
     describe("Search for item", () => {
         it("should find Fire Cluster in the db", async () => {
             req = {
@@ -91,6 +104,7 @@ describe("API routes", () => {
     });
     describe("Register new user", () => {
         it("should add a new user to the db and attach cookie session to request", async () => {
+            await clearAlarms();
             await clearUsers();
             req = {
                 body: {
@@ -110,6 +124,7 @@ describe("API routes", () => {
             hash.update(res.json.mock.calls[0][0].insertId.toString());
             const hashedId = hash.digest("hex");
             expect(req.session.userId).toBe(hashedId);
+            expect(req.session.email).toBe("test@test.com");
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
         });
         it("should return an 'email is required' error", async () => {
@@ -210,12 +225,15 @@ describe("API routes", () => {
             await orm.registerAndReturnUser(req, res);
             expect(res.json.mock.calls[0][0].error).toBe(true);
             expect(res.json.mock.calls[0][0].password2).toBe("Passwords must match");
-        })
+        });
     });
     describe("Logout", () => {
         it("should remove cookie session from request", () => {
             req = {
-                session: {id: "whatever"}
+                session: {
+                    id: "whatever",
+                    email: "blah@blah.com"
+                }
             };
 
             res = {
@@ -245,7 +263,9 @@ describe("API routes", () => {
             const hash = crypto.createHash("sha256");
             hash.update(res.json.mock.calls[0][0].id.toString());
             const hashedId = hash.digest("hex");
+            sessionId = hashedId;
             expect(req.session.userId).toBe(hashedId);
+            expect(req.session.email).toBe("test@test.com");
             expect(res.json.mock.calls[0][0].email).toBe("test@test.com");
         });
         it("should return an 'email is required' error", async () => {
@@ -294,7 +314,7 @@ describe("API routes", () => {
             await orm.loginAndReturnUser(req, res);
             expect(res.json.mock.calls[0][0].error).toBe(true);
             expect(res.json.mock.calls[0][0].email).toBe("Email not found");
-        })
+        });
         it("should return a 'password is required' error", async () => {
             req = {
                 body: {
@@ -311,6 +331,27 @@ describe("API routes", () => {
             expect(res.json.mock.calls[0][0].password).toBe("Password field is required");
         });
     });
+    describe("Add a new alarm", () => {
+        it("should successfully add an alarm for a logged-in user", async () => {
+            req = {
+                body: {
+                    email: "test@test.com",
+                    itemId: 1,
+                    notes: "this is a note"
+                },
+                session: {
+                    userId: sessionId
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.createAndReturnAlarm(req, res);
+            expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
+        });
+    })
 });
 
 
