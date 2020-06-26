@@ -9,7 +9,7 @@ const isEmpty = function(obj) {
     return true;
 };
 
-const validateLoginInput = async function(data) {
+const validateLoginInput = function(data) {
     let errors = {};
 
     const email = data.email ? data.email : "";
