@@ -4,6 +4,7 @@ const crypto = require("crypto");
 
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const { join } = require("path");
 
 
 
@@ -185,7 +186,7 @@ const orm = {
     },
     createAlarm: function(req, userId) {
         const queryString = "INSERT INTO alarms SET ?";
-        const dbQuery = async function(resolve, reject) {
+        const dbQuery = function(resolve, reject) {
             const hash = crypto.createHash("sha256");
             hash.update(userId.toString());
             const hashedId = hash.digest("hex");
@@ -205,6 +206,33 @@ const orm = {
         try {
             const userId = await orm.findId(req.body.email);
             const result = await orm.createAlarm(req, userId);
+            res.json(result);
+        } catch (err) {
+            res.json({...err, error: true});
+        }
+    },
+    getAlarms: function(req, userId) {
+        const queryString = "SELECT * FROM alarms INNER JOIN items ON alarms.item_id = items.id WHERE user_id = ?";
+        const dbQuery = function(resolve, reject) {
+            const hash = crypto.createHash("sha256");
+            hash.update(userId.toString());
+            const hashedId = hash.digest("hex");
+            if (req.session.userId !== hashedId) {
+                return reject({email: "Invalid credentials"});
+            }
+            connection.query(queryString, [userId], function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(result);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    getAndReturnAlarms: async function(req, res) {
+        try {
+            const userId = await orm.findId(req.session.email);
+            const result = await orm.getAlarms(req, userId);
             res.json(result);
         } catch (err) {
             res.json({...err, error: true});

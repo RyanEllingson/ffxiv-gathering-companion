@@ -389,6 +389,55 @@ describe("API routes", () => {
             expect(res.json.mock.calls[0][0].email).toBe("Invalid credentials");
         });
     });
+    describe("Get all alarms", () => {
+        it("should find all alarms for currently logged-in user", async () => {
+            req = {
+                session: {
+                    userId: sessionId,
+                    email: "test@test.com"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.getAndReturnAlarms(req, res);
+            expect(res.json.mock.calls[0][0].length).toBe(1);
+            expect(res.json.mock.calls[0][0][0].item_name).toBe("Fire Cluster");
+        });
+        it("should return an 'email not found' error", async () => {
+            req = {
+                session: {
+                    email: "ds;lfjad;lkfj"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.getAndReturnAlarms(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email not found");
+        });
+        it("should return an 'invalid credentials' error", async () => {
+            req = {
+                session: {
+                    userId: "ds;lfjas;dlfjsd;",
+                    email: "test@test.com"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.getAndReturnAlarms(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Invalid credentials");
+        });
+    });
 });
 
 
