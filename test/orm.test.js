@@ -351,7 +351,44 @@ describe("API routes", () => {
             await orm.createAndReturnAlarm(req, res);
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
         });
-    })
+        it("should return an 'email not found' error", async () => {
+            req = {
+                body: {
+                    email: "blahblah@something.com",
+                    itemId: 1,
+                    notes: "whatever"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.createAndReturnAlarm(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Email not found");
+        });
+        it("should return an 'invalid credentials' error", async () => {
+            req = {
+                body: {
+                    email: "test@test.com",
+                    itemId: 1,
+                    notes: "note"
+                },
+                session: {
+                    userId: "somerandomcharacters"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.createAndReturnAlarm(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].email).toBe("Invalid credentials");
+        });
+    });
 });
 
 
