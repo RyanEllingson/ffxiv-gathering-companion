@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieSession = require("cookie-session");
+const path = require("path");
 const { orm } = require("./config/orm");
 
 const cookieKey = process.env.COOKIE_KEY || ";ljoisdufadnruoqerb";
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cookieSession({
     keys: [cookieKey]
 }));
+app.use(express.static(path.resolve(__dirname, "client", "build")));
 
 app.get("/api/items", orm.getAndReturnAllItems);
 app.get("/api/items/botany", orm.getAndReturnBotanyItems);
@@ -22,6 +24,10 @@ app.post("/api/register", orm.registerAndReturnUser);
 app.post("/api/login", orm.loginAndReturnUser);
 app.post("/api/alarms", orm.createAndReturnAlarm);
 app.get("/api/alarms", orm.getAndReturnAlarms);
+
+app.get("*", function(req, res) {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 app.listen(PORT, function() {
     console.log("App listening on PORT: " + PORT);
