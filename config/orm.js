@@ -176,7 +176,7 @@ const orm = {
                     return reject(err);
                 }
                 if (result.length < 1) {
-                    return reject("Email not found");
+                    return reject({email: "Email not found"});
                 }
                 return resolve(result[0].id);
             });
