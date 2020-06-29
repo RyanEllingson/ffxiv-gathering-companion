@@ -1,0 +1,81 @@
+import React, { useState } from "react";
+const axios = require("axios");
+
+const Items = function() {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const getAllItems = function(event) {
+        event.preventDefault();
+        axios.get("/api/items")
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    };
+
+    const getBotanyItems = function(event) {
+        event.preventDefault();
+        axios.get("/api/items/botany")
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    };
+
+    const getMiningItems = function(event) {
+        event.preventDefault();
+        axios.get("/api/items/mining")
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    };
+
+    const searchForItem = function(event) {
+        event.preventDefault();
+        axios.get(`/api/items/${searchTerm}`)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    }
+
+    return (
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <div className="card text-center dropdown">
+                        <h4 className="card-header">
+                            Find gatherables
+                        </h4>
+                        <div className="card-body">
+                            <h5 className="card-title">Click one of the buttons below to find items</h5>
+                            <button className="btn btn-primary card-link" onClick={(e)=>getAllItems(e)}>Get all items</button>
+                            <button className="btn btn-primary card-link" onClick={(e)=>getBotanyItems(e)}>Get all botany items</button>
+                            <button className="btn btn-primary card-link" onClick={(e)=>getMiningItems(e)}>Get all mining items</button>
+                            <button className="btn btn-primary card-link" type="button" data-toggle="collapse" data-target="#collapseMenu" aria-haspopup="true" aria-expanded="false">Open search form</button>
+                            <form className="collapse form-inline p-4" id="collapseMenu">
+                                <div className="form-group ml-auto">
+                                    <label htmlFor="exampleDropdownFormEmail2">Find item by name</label>
+                                    <input type="text" className="form-control mx-3" id="exampleDropdownFormEmail2" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} />
+                                </div>
+                                <button type="submit" class="btn btn-primary mr-auto" onClick={(e)=>searchForItem(e)}>Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    );
+}
+
+export default Items;
