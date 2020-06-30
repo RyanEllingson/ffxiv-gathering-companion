@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import ItemCard from "../ItemCard";
 const axios = require("axios");
 
 const Items = function() {
     const [searchTerm, setSearchTerm] = useState("");
+    const [items, setItems] = useState(null);
 
     const getAllItems = function(event) {
         event.preventDefault();
         axios.get("/api/items")
         .then((response) => {
-            console.log(response.data);
+            setItems(response.data);
         })
         .catch((err) => {
             console.error(err);
@@ -19,7 +21,7 @@ const Items = function() {
         event.preventDefault();
         axios.get("/api/items/botany")
         .then((response) => {
-            console.log(response.data);
+            setItems(response.data);
         })
         .catch((err) => {
             console.error(err);
@@ -30,7 +32,7 @@ const Items = function() {
         event.preventDefault();
         axios.get("/api/items/mining")
         .then((response) => {
-            console.log(response.data);
+            setItems(response.data);
         })
         .catch((err) => {
             console.error(err);
@@ -41,16 +43,16 @@ const Items = function() {
         event.preventDefault();
         axios.get(`/api/items/${searchTerm}`)
         .then((response) => {
-            console.log(response.data);
+            setItems(response.data);
         })
         .catch((err) => {
             console.error(err);
         });
-    }
+    };
 
     return (
         <div className="container">
-            <div className="row">
+            <div className="row mb-5">
                 <div className="col-12">
                     <div className="card text-center dropdown">
                         <h4 className="card-header">
@@ -73,9 +75,33 @@ const Items = function() {
                     </div>
                 </div>
             </div>
+            {items ? <div className="row">
+                <div className="col-12">
+                    <div class="card">
+                        <ul class="list-group">
+                            {items.map((item) => {
+                                return <li className="list-group-item">
+                                    <ItemCard
+                                        key={item.id}
+                                        aetheryte={item.aetheryte}
+                                        coordinates={item.coordinates}
+                                        discipline={item.discipline}
+                                        duration={item.duration}
+                                        id={item.id}
+                                        image={item.image_url}
+                                        name={item.item_name}
+                                        type={item.node_type}
+                                        region={item.region}
+                                        start={item.start_time}
+                                    />
+                                </li>
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            </div> : ""}
         </div>
-        
     );
-}
+};
 
 export default Items;
