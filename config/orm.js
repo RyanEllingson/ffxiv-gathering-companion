@@ -121,7 +121,7 @@ const orm = {
             const hashedId = hash.digest("hex");
             req.session.userId = hashedId;
             req.session.email = req.body.email;
-            res.json(result);
+            res.json({...result, email: req.body.email});
         } catch (err) {
             res.json({...err, error: true});
         }
@@ -231,7 +231,7 @@ const orm = {
     },
     getAndReturnAlarms: async function(req, res) {
         try {
-            const userId = await orm.findId(req.session.email);
+            const userId = await orm.findId(req.body.email);
             const result = await orm.getAlarms(req, userId);
             res.json(result);
         } catch (err) {

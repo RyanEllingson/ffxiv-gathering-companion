@@ -393,7 +393,9 @@ describe("API routes", () => {
         it("should find all alarms for currently logged-in user", async () => {
             req = {
                 session: {
-                    userId: sessionId,
+                    userId: sessionId
+                },
+                body: {
                     email: "test@test.com"
                 }
             };
@@ -408,7 +410,7 @@ describe("API routes", () => {
         });
         it("should return an 'email not found' error", async () => {
             req = {
-                session: {
+                body: {
                     email: "ds;lfjad;lkfj"
                 }
             };
@@ -424,7 +426,9 @@ describe("API routes", () => {
         it("should return an 'invalid credentials' error", async () => {
             req = {
                 session: {
-                    userId: "ds;lfjas;dlfjsd;",
+                    userId: "ds;lfjas;dlfjsd;"
+                },
+                body: {
                     email: "test@test.com"
                 }
             };
