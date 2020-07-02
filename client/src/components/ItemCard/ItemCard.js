@@ -12,28 +12,33 @@ const ItemCard = function({ aetheryte, coordinates, discipline, duration, id, im
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-3">
-                            <p>Start time: {start}</p>
+                        <div className="col">
+                            <p className="label">Region:</p>
+                            <p>{region}</p>
                         </div>
-                        <div className="col-3">
-                            <p>Duration: {duration} hours</p>
+                        <div className="col">
+                            <p className="label">Coordinates:</p>
+                            <p>{coordinates}</p>
                         </div>
-                        <div className="col-6">
-                            <p>Discipline: {discipline}</p>
+                        <div className="col">
+                            <p className="label">Nearest aetheryte:</p>
+                            <p>{aetheryte}</p>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3">
-                            <p>Region: {region}</p>
+                        <div className="col">
+                            <p className="label">Start time:</p>
+                            <p>{start}</p>
                         </div>
-                        <div className="col-3">
-                            <p>Coordinates: {coordinates}</p>
+                        <div className="col">
+                            <p className="label">Duration:</p>
+                            <p>{duration} hours</p>
                         </div>
-                        <div className="col-3">
-                            <p>Nearest aetheryte: {aetheryte}</p>
+                        <div className="col">
+                            <p className="label">Discipline:</p>
+                            <p>{discipline}</p>
                         </div>
-                        <div className="col-3">
-                            <p>Node type: {type}</p>
+                        <div className="col">
+                            <p className="label">Node type:</p>
+                            <p>{type}</p>
                         </div>
                     </div>
                 </div>

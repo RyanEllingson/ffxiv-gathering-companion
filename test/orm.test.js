@@ -10,6 +10,7 @@ describe("API routes", () => {
         res = {};
     });
     let sessionId;
+    let alarmId;
     afterAll(() => {
         connection.end(function(err) {
             // Connection terminated
@@ -349,6 +350,7 @@ describe("API routes", () => {
             };
 
             await orm.createAndReturnAlarm(req, res);
+            alarmId = res.json.mock.calls[0][0].insertId;
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
         });
         it("should return an 'email not found' error", async () => {
@@ -386,7 +388,7 @@ describe("API routes", () => {
 
             await orm.createAndReturnAlarm(req, res);
             expect(res.json.mock.calls[0][0].error).toBe(true);
-            expect(res.json.mock.calls[0][0].email).toBe("Invalid credentials");
+            expect(res.json.mock.calls[0][0].userId).toBe("Invalid credentials");
         });
     });
     describe("Get all alarms", () => {
@@ -439,7 +441,59 @@ describe("API routes", () => {
 
             await orm.getAndReturnAlarms(req, res);
             expect(res.json.mock.calls[0][0].error).toBe(true);
-            expect(res.json.mock.calls[0][0].email).toBe("Invalid credentials");
+            expect(res.json.mock.calls[0][0].userId).toBe("Invalid credentials");
+        });
+    });
+    describe("Delete an alarm", () => {
+        it("should return an 'invalid credentials' error", async () => {
+            req = {
+                body: {
+                    id: alarmId
+                },
+                session: {
+                    userId: "s;aldfja;sdlfjads"
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.deleteAlarmAndReturn(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].userId).toBe("Invalid credentials");
+        });
+        it("should successfully delete an alarm by id", async () => {
+            req = {
+                body: {
+                    id: alarmId
+                },
+                session: {
+                    userId: sessionId
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.deleteAlarmAndReturn(req, res);
+            expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
+        });
+        it("should return an 'alarm not found' error", async () => {
+            req = {
+                body: {
+                    id: alarmId
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.deleteAlarmAndReturn(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].alarm).toBe("Alarm not found");
         });
     });
 });

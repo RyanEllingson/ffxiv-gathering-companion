@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import Items from "./components/Items";
 import Register from "./components/Register";
 import Login from "./components/Login";
+const axios = require("axios");
 
 function App() {
   const { user, setUser } = useContext(AuthContext);
@@ -18,8 +19,14 @@ function App() {
 
   const handleLogout = function(event) {
     event.preventDefault();
-    setUser(null);
-    history.push("/");
+    axios.get("/api/logout")
+    .then(function(response) {
+      if (response.data.loggedOut) {
+        setUser(null);
+        history.push("/");
+      }
+    });
+    
   };
 
   return (
