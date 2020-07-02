@@ -77,7 +77,7 @@ const Items = function() {
             </div>
             {items ? <div className="row">
                 <div className="col-12">
-                    <div class="card">
+                    <div class="card mb-5">
                         <ul class="list-group">
                             {items.map((item) => {
                                 return <li className="list-group-item">

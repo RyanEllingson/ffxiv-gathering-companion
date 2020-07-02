@@ -169,10 +169,10 @@ const orm = {
         req.session = null;
         res.json({loggedOut: true});
     },
-    findId: function(email) {
+    findIdByEmail: function(email) {
         const queryString = "SELECT id FROM users WHERE email = ?";
         const dbQuery = function(resolve, reject) {
-            connection.query(queryString, email, function(err, result) {
+            connection.query(queryString, [email], function(err, result) {
                 if (err) {
                     return reject(err);
                 }
@@ -191,7 +191,7 @@ const orm = {
             hash.update(userId.toString());
             const hashedId = hash.digest("hex");
             if (req.session.userId !== hashedId) {
-                return reject({email: "Invalid credentials"});
+                return reject({userId: "Invalid credentials"});
             }
             connection.query(queryString, { user_id: userId, item_id: req.body.itemId, notes: req.body.notes}, function(err, result) {
                 if (err) {
@@ -204,7 +204,7 @@ const orm = {
     },
     createAndReturnAlarm: async function(req, res) {
         try {
-            const userId = await orm.findId(req.body.email);
+            const userId = await orm.findIdByEmail(req.body.email);
             const result = await orm.createAlarm(req, userId);
             res.json(result);
         } catch (err) {
@@ -218,7 +218,7 @@ const orm = {
             hash.update(userId.toString());
             const hashedId = hash.digest("hex");
             if (req.session.userId !== hashedId) {
-                return reject({email: "Invalid credentials"});
+                return reject({userId: "Invalid credentials"});
             }
             connection.query(queryString, [userId], function(err, result) {
                 if (err) {
@@ -231,8 +231,51 @@ const orm = {
     },
     getAndReturnAlarms: async function(req, res) {
         try {
-            const userId = await orm.findId(req.body.email);
+            const userId = await orm.findIdByEmail(req.body.email);
             const result = await orm.getAlarms(req, userId);
+            res.json(result);
+        } catch (err) {
+            res.json({...err, error: true});
+        }
+    },
+    findAlarmUserId: function(id) {
+        const queryString = "SELECT user_id FROM alarms WHERE id = ?";
+        const dbQuery = function(resolve, reject) {
+            connection.query(queryString, id, function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                if (result.length < 1) {
+                    return reject({alarm: "Alarm not found"});
+                }
+                return resolve(result[0].user_id);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    deleteAlarm: function(req, userId) {
+        const alarmId = req.body.id;
+        const queryString = "DELETE FROM alarms WHERE id = ?";
+        const dbQuery = function(resolve, reject) {
+            const hash = crypto.createHash("sha256");
+            hash.update(userId.toString());
+            const hashedId = hash.digest("hex");
+            if (req.session.userId !== hashedId) {
+                return reject({userId: "Invalid credentials"});
+            }
+            connection.query(queryString, [alarmId], function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(result);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    deleteAlarmAndReturn: async function(req, res) {
+        try {
+            const userId = await orm.findAlarmUserId(req.body.id);
+            const result = await orm.deleteAlarm(req, userId);
             res.json(result);
         } catch (err) {
             res.json({...err, error: true});
@@ -240,7 +283,4 @@ const orm = {
     }
 };
 
-module.exports = {
-    orm: orm,
-    connection: connection
-};
+module.exports = {orm, connection};
