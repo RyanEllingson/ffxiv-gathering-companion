@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Auth } from "./auth/auth";
+import { Time } from "./time/time";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 
@@ -10,7 +11,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Auth>
-        <App />
+        <Time>
+          <App />
+        </Time>
       </Auth>
     </Router>
     
