@@ -9,6 +9,7 @@ describe("API routes", () => {
         req = {};
         res = {};
     });
+    let userId;
     let sessionId;
     let alarmId;
     afterAll(() => {
@@ -121,12 +122,13 @@ describe("API routes", () => {
             };
 
             await orm.registerAndReturnUser(req, res);
+            userId = res.json.mock.calls[0][0].insertId;
             const hash = crypto.createHash("sha256");
             hash.update(res.json.mock.calls[0][0].insertId.toString());
             const hashedId = hash.digest("hex");
             expect(req.session.userId).toBe(hashedId);
-            expect(req.session.email).toBe("test@test.com");
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
+            expect(res.json.mock.calls[0][0].email).toBe("test@test.com");
         });
         it("should return an 'email is required' error", async () => {
             req = {
@@ -262,11 +264,10 @@ describe("API routes", () => {
     
             await orm.loginAndReturnUser(req, res);
             const hash = crypto.createHash("sha256");
-            hash.update(res.json.mock.calls[0][0].id.toString());
+            hash.update(userId.toString());
             const hashedId = hash.digest("hex");
             sessionId = hashedId;
             expect(req.session.userId).toBe(hashedId);
-            expect(req.session.email).toBe("test@test.com");
             expect(res.json.mock.calls[0][0].email).toBe("test@test.com");
         });
         it("should return an 'email is required' error", async () => {

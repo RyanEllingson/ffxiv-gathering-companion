@@ -50,6 +50,21 @@ const Items = function() {
         });
     };
 
+    const createAlarm = function(event, id, email, note) {
+        event.preventDefault();
+        axios.post("/api/alarms", {
+            email: email,
+            itemId: id,
+            notes: note
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    };
+
     return (
         <div className="container">
             <div className="row mb-5">
@@ -93,6 +108,7 @@ const Items = function() {
                                         type={item.node_type}
                                         region={item.region}
                                         start={item.start_time}
+                                        handleClick={createAlarm}
                                     />
                                 </li>
                             })}

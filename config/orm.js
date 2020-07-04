@@ -120,7 +120,6 @@ const orm = {
             hash.update(result.insertId.toString());
             const hashedId = hash.digest("hex");
             req.session.userId = hashedId;
-            req.session.email = req.body.email;
             res.json({...result, email: req.body.email});
         } catch (err) {
             res.json({...err, error: true});
@@ -159,8 +158,7 @@ const orm = {
             hash.update(result.id.toString());
             const hashedId = hash.digest("hex");
             req.session.userId = hashedId;
-            req.session.email = result.email;
-            res.json(result);
+            res.json({email: result.email});
         } catch (err) {
             res.json({...err, error: true});
         }
