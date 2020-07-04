@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ItemCard from "../ItemCard";
+import AlarmModal from "../AlarmModal";
 const axios = require("axios");
 
 const Items = function() {
@@ -102,14 +103,14 @@ const Items = function() {
                                         coordinates={item.coordinates}
                                         discipline={item.discipline}
                                         duration={item.duration}
-                                        id={item.id}
                                         image={item.image_url}
                                         name={item.item_name}
                                         type={item.node_type}
                                         region={item.region}
                                         start={item.start_time}
-                                        handleClick={createAlarm}
-                                    />
+                                    >
+                                        <AlarmModal id={item.id} name={item.item_name} handleClick={createAlarm} />
+                                    </ItemCard>
                                 </li>
                             })}
                         </ul>
