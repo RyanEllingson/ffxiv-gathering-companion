@@ -24,8 +24,8 @@ app.post("/api/register", orm.registerAndReturnUser);
 app.post("/api/login", orm.loginAndReturnUser);
 app.get("/api/logout", orm.logout);
 app.post("/api/alarms", orm.createAndReturnAlarm);
-app.get("/api/alarms", orm.getAndReturnAlarms);
-app.delete("/api/alarms", orm.deleteAlarmAndReturn);
+app.get("/api/alarms/:email", orm.getAndReturnAlarms);
+app.delete("/api/alarms/:id", orm.deleteAlarmAndReturn);
 
 app.get("*", function(req, res) {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));

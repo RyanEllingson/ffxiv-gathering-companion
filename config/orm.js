@@ -210,7 +210,7 @@ const orm = {
         }
     },
     getAlarms: function(req, userId) {
-        const queryString = "SELECT * FROM alarms INNER JOIN items ON alarms.item_id = items.id WHERE user_id = ?";
+        const queryString = "SELECT items.aetheryte, items.coordinates, items.discipline, items.duration, alarms.id, items.image_url, items.item_name, items.node_type, alarms.notes, items.region, items.start_time FROM alarms INNER JOIN items ON alarms.item_id = items.id WHERE user_id = ?";
         const dbQuery = function(resolve, reject) {
             const hash = crypto.createHash("sha256");
             hash.update(userId.toString());
@@ -229,7 +229,7 @@ const orm = {
     },
     getAndReturnAlarms: async function(req, res) {
         try {
-            const userId = await orm.findIdByEmail(req.body.email);
+            const userId = await orm.findIdByEmail(req.params.email);
             const result = await orm.getAlarms(req, userId);
             res.json(result);
         } catch (err) {
@@ -252,7 +252,7 @@ const orm = {
         return new Promise(dbQuery);
     },
     deleteAlarm: function(req, userId) {
-        const alarmId = req.body.id;
+        const alarmId = req.params.id;
         const queryString = "DELETE FROM alarms WHERE id = ?";
         const dbQuery = function(resolve, reject) {
             const hash = crypto.createHash("sha256");
@@ -272,7 +272,8 @@ const orm = {
     },
     deleteAlarmAndReturn: async function(req, res) {
         try {
-            const userId = await orm.findAlarmUserId(req.body.id);
+            const userId = await orm.findAlarmUserId(req.params.id);
+            console.log(userId);
             const result = await orm.deleteAlarm(req, userId);
             res.json(result);
         } catch (err) {

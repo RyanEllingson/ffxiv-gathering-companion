@@ -398,7 +398,7 @@ describe("API routes", () => {
                 session: {
                     userId: sessionId
                 },
-                body: {
+                params: {
                     email: "test@test.com"
                 }
             };
@@ -413,7 +413,7 @@ describe("API routes", () => {
         });
         it("should return an 'email not found' error", async () => {
             req = {
-                body: {
+                params: {
                     email: "ds;lfjad;lkfj"
                 }
             };
@@ -431,7 +431,7 @@ describe("API routes", () => {
                 session: {
                     userId: "ds;lfjas;dlfjsd;"
                 },
-                body: {
+                params: {
                     email: "test@test.com"
                 }
             };
@@ -448,7 +448,7 @@ describe("API routes", () => {
     describe("Delete an alarm", () => {
         it("should return an 'invalid credentials' error", async () => {
             req = {
-                body: {
+                params: {
                     id: alarmId
                 },
                 session: {
@@ -466,7 +466,7 @@ describe("API routes", () => {
         });
         it("should successfully delete an alarm by id", async () => {
             req = {
-                body: {
+                params: {
                     id: alarmId
                 },
                 session: {
@@ -483,7 +483,7 @@ describe("API routes", () => {
         });
         it("should return an 'alarm not found' error", async () => {
             req = {
-                body: {
+                params: {
                     id: alarmId
                 }
             };

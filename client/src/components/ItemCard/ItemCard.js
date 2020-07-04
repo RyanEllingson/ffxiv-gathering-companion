@@ -10,12 +10,10 @@ const ItemCard = function({ aetheryte, coordinates, discipline, duration, image,
                 <img src={image} className="mr-3" alt="item pic" />
                 <div className="media-body">
                     <div className="row">
-                        <div className="col-10">
+                        <div className="col-3">
                             <h5 className="mt-0">{name}</h5>
                         </div>
-                        <div className="col-2 text-right">
-                            {user ? children : ""}
-                        </div>
+                        {user ? children : ""}
                     </div>
                     <div className="row">
                         <div className="col">

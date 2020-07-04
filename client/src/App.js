@@ -9,6 +9,7 @@ import { AuthContext } from "./auth/auth";
 import Clock from "./components/Clock";
 import Home from "./components/Home";
 import Items from "./components/Items";
+import Alarms from "./components/Alarms";
 import Register from "./components/Register";
 import Login from "./components/Login";
 const axios = require("axios");
@@ -48,6 +49,9 @@ function App() {
               <li className="nav-item">
                 <NavLink to="/items" exact className="nav-link" activeClassName="active">Find Items</NavLink>
               </li>
+              {user ? <li className="nav-item">
+                <NavLink to="/alarms" exact className="nav-link" activeClassName="active">View Alarms</NavLink>
+              </li> : ""}
               {user ? "" : <li className="nav-item">
                 <NavLink to="/register" exact className="nav-link" activeClassName="active">Register</NavLink>
               </li>}
@@ -64,6 +68,9 @@ function App() {
         <Switch>
           <Route path="/items">
             <Items />
+          </Route>
+          <Route path="/alarms">
+            <Alarms />
           </Route>
           <Route path="/register">
             <Register />
