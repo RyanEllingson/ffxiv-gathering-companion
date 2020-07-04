@@ -14,7 +14,6 @@ const Login = function() {
         event.preventDefault();
         axios.post("/api/login", { email, password })
         .then(function(response) {
-            console.log(response.data);
             if (response.data.error) {
                 setErrors(response.data);
             } else {
