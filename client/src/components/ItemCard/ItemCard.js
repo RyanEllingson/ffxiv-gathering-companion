@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../../auth/auth";
 import "./ItemCard.css";
 
-const ItemCard = function({ aetheryte, coordinates, discipline, duration, image, name, type, region, start, children }) {
+const ItemCard = function({ aetheryte, coordinates, discipline, duration, image, name, type, region, start, active, children }) {
     const { user } = useContext(AuthContext);
 
     return (
@@ -11,7 +11,7 @@ const ItemCard = function({ aetheryte, coordinates, discipline, duration, image,
                 <div className="media-body">
                     <div className="row">
                         <div className="col-3">
-                            <h5 className="mt-0">{name}</h5>
+                            <h5 className="mt-0">{name}{active ? " - active" : ""}</h5>
                         </div>
                         {user ? children : ""}
                     </div>
