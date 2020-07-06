@@ -182,9 +182,28 @@ const orm = {
         };
         return new Promise(dbQuery);
     },
-    createAlarm: function(req, userId) {
-        const queryString = "INSERT INTO alarms SET ?";
+    doesAlarmExist: function(itemId) {
+        const queryString = "SELECT * FROM alarms WHERE item_id = ?";
         const dbQuery = function(resolve, reject) {
+            connection.query(queryString, [itemId], function(err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                if (result.length > 0) {
+                    return resolve(true);
+                }
+                return resolve(false);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    createAlarm: async function(req, userId) {
+        const queryString = "INSERT INTO alarms SET ?";
+        const exists = await orm.doesAlarmExist(req.body.itemId);
+        const dbQuery = function(resolve, reject) {
+            if (exists) {
+                return reject({alarm: "Alarm already exists"});
+            }
             const hash = crypto.createHash("sha256");
             hash.update(userId.toString());
             const hashedId = hash.digest("hex");
