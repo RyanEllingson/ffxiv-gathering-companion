@@ -354,6 +354,26 @@ describe("API routes", () => {
             alarmId = res.json.mock.calls[0][0].insertId;
             expect(res.json.mock.calls[0][0].affectedRows).toBe(1);
         });
+        it("should return an 'alarm already exists' error", async() => {
+            req = {
+                body: {
+                    email: "test@test.com",
+                    itemId: 1,
+                    notes: "this is a note"
+                },
+                session: {
+                    userId: sessionId
+                }
+            };
+
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.createAndReturnAlarm(req, res);
+            expect(res.json.mock.calls[0][0].error).toBe(true);
+            expect(res.json.mock.calls[0][0].alarm).toBe("Alarm already exists");
+        });
         it("should return an 'email not found' error", async () => {
             req = {
                 body: {
@@ -375,7 +395,7 @@ describe("API routes", () => {
             req = {
                 body: {
                     email: "test@test.com",
-                    itemId: 1,
+                    itemId: 2,
                     notes: "note"
                 },
                 session: {
