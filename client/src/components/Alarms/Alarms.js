@@ -16,11 +16,31 @@ const Alarms = function() {
         history.push("/");
     }
 
+    const sortedAlarms = function(alarmArray) {
+        const newAlarms = [];
+        const activeAlarms = [];
+        const checkTime = moment(time.format("HH"), "HH");
+        for (let i=0; i<24; i++) {
+            console.log(checkTime.format("HH"));
+            for (let j=0; j<alarmArray.length; j++) {
+                if (checkTime.format("HH") === alarmArray[j].start_time.split(":")[0]) {
+                    if (isActive(alarmArray[j].start_time, alarmArray[j].duration)) {
+                        activeAlarms.push(alarmArray[j]);
+                    } else {
+                        newAlarms.push(alarmArray[j]);
+                    }
+                }
+            }
+            checkTime.add(1, "hours");
+        }
+        return activeAlarms.concat(newAlarms);
+    }
+
     const renderAlarms = function() {
         axios.get(`/api/alarms/${user}`)
         .then(function(response) {
             if (!response.data.error) {
-                setAlarms(response.data);
+                setAlarms(sortedAlarms(response.data));
             }
         })
         .catch(function(err) {
@@ -28,13 +48,15 @@ const Alarms = function() {
         });
     };
 
-    setTimeout(() => {
-        if (time.get("minutes") === 0) {
-            const tempAlarms = [...alarms];
-            setAlarms(tempAlarms);
-        }
-    }, 1500);
-    
+    let delay = false;
+
+    if (time.get("minutes") === 0 && !delay) {
+        delay = true;
+        setTimeout(() => {
+            delay = false;
+            setAlarms(sortedAlarms(alarms));
+        }, 3500);
+    }
 
     useEffect(() => {
         renderAlarms();
