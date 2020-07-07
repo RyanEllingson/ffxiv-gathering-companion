@@ -5,7 +5,7 @@ const Clock = function() {
     const { time } = useContext(TimeContext);
     
     return (
-        <span>Eorzea Time: {time.format("h:mm a")}</span>
+        <span className="navbar-brand">Eorzea Time: {time.format("h:mm a")}</span>
     );
 };
 

@@ -1,9 +1,14 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../auth/auth";
 import "./ItemCard.css";
+const moment = require("moment");
 
 const ItemCard = function({ aetheryte, coordinates, discipline, duration, image, name, type, region, start, notes, children }) {
     const { user } = useContext(AuthContext);
+
+    const startTime = moment(start, "H:mm");
+    const endTime = moment(start, "H:mm");
+    endTime.add(duration, "hours");
 
     return (
             <div className="media">
@@ -30,11 +35,11 @@ const ItemCard = function({ aetheryte, coordinates, discipline, duration, image,
                         </div>
                         <div className="col-6 col-sm-4 col-md-3 col-xl">
                             <p className="label">Start time:</p>
-                            <p>{start}</p>
+                            <p>{startTime.format("h:mm a")}</p>
                         </div>
                         <div className="col-6 col-sm-4 col-md-3 col-xl">
-                            <p className="label">Duration:</p>
-                            <p>{duration} hours</p>
+                            <p className="label">End time:</p>
+                            <p>{endTime.format("h:mm a")}</p>
                         </div>
                         <div className="col-6 col-sm-4 col-md-3 col-xl">
                             <p className="label">Discipline:</p>
