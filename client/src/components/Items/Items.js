@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ItemCard from "../ItemCard";
 import AlarmModal from "../AlarmModal";
+import "./Items.css";
 const axios = require("axios");
 
 const Items = function() {
@@ -76,10 +77,10 @@ const Items = function() {
                         </h4>
                         <div className="card-body">
                             <h5 className="card-title">Click one of the buttons below to find items</h5>
-                            <button className="btn btn-primary card-link" onClick={(e)=>getAllItems(e)}>Get all items</button>
-                            <button className="btn btn-primary card-link" onClick={(e)=>getBotanyItems(e)}>Get all botany items</button>
-                            <button className="btn btn-primary card-link" onClick={(e)=>getMiningItems(e)}>Get all mining items</button>
-                            <button className="btn btn-primary card-link" type="button" data-toggle="collapse" data-target="#collapseMenu" aria-haspopup="true" aria-expanded="false">Open search form</button>
+                            <button className="btn btn-primary card-link mt-1 first" onClick={(e)=>getAllItems(e)}>Get all items</button>
+                            <button className="btn btn-primary card-link mt-1 second" onClick={(e)=>getBotanyItems(e)}>Get all botany items</button>
+                            <button className="btn btn-primary card-link mt-1 third" onClick={(e)=>getMiningItems(e)}>Get all mining items</button>
+                            <button className="btn btn-primary card-link mt-1 fourth" type="button" data-toggle="collapse" data-target="#collapseMenu" aria-haspopup="true" aria-expanded="false">Open search form</button>
                             <form className="collapse form-inline p-4" id="collapseMenu">
                                 <div className="form-group ml-auto">
                                     <label htmlFor="exampleDropdownFormEmail2">Find item by name</label>

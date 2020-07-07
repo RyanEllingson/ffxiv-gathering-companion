@@ -6,7 +6,7 @@ const AlarmModal = function({ id, name, handleClick }) {
     const [note, setNote] = useState("");
 
     return (
-        <div className="col-9 text-right">
+        <div className="col-5 col-sm-4 col-md-3 text-right">
             <button className="btn btn-success" data-toggle="modal" data-target={`#alarmModal${id}`}>Add alarm</button>
             <div class="modal fade" id={`alarmModal${id}`} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

@@ -100,12 +100,10 @@ const Alarms = function() {
                                         type={alarm.node_type}
                                         region={alarm.region}
                                         start={alarm.start_time}
+                                        notes={alarm.notes}
                                         active={isActive(alarm.start_time, alarm.duration)}
                                     >
-                                        <div className="col-7">
-                                            <p>{alarm.notes}</p>
-                                        </div>
-                                        <div className="col-2 text-right">
+                                        <div className="col-5 col-sm-4 col-md-3 text-right">
                                             <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id)}}>Delete alarm</button>
                                         </div>
                                     </ItemCard>
