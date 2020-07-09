@@ -13,7 +13,7 @@
     "url": "git+https://github.com/RyanEllingson/ffxiv-gathering-companion.git"
   },
   "author": "Ryan Ellingson",
-  "license": "MIT",
+  "license": "none",
   "bugs": {
     "url": "https://github.com/RyanEllingson/ffxiv-gathering-companion/issues"
   },
