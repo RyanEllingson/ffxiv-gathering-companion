@@ -1,0 +1,13 @@
+@font-face {
+    font-family: OPTIEngeEtienne;
+    src: url("../../assets/fonts/OPTIEngeEtienne.otf");
+}
+
+h1 {
+    font-family: OPTIEngeEtienne;
+}
+
+.jumbotron {
+    background-color: rgba(0, 119, 69, 0.9);
+    color: rgb(198, 255, 64);
+}
