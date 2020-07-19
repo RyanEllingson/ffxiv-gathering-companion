@@ -94,6 +94,26 @@ const orm = {
         }
         
     },
+    getEphemeralItems: function() {
+        const queryString = "SELECT * FROM items WHERE node_type = 'ephemeral'";
+        const dbQuery = function(resolve, reject) {
+            connection.query(queryString, (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                return resolve(result);
+            });
+        };
+        return new Promise(dbQuery);
+    },
+    getAndReturnEphemeralItems: async function(req, res) {
+        try {
+            const result = await orm.getEphemeralItems();
+            res.json(result);
+        } catch(err) {
+            res.json({...err, error: true});
+        }
+    },
     registerUser: function(userInfo) {
         const queryString = "INSERT INTO users SET ?";
         const dbQuery = async function(resolve, reject) {
