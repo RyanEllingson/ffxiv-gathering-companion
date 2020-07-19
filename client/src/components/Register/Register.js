@@ -32,8 +32,8 @@ const Register = function() {
             <div className="row">
                 <div className="col-12">
                     <div className="card text-center">
-                        <h5 className="card-header">Register an account</h5>
-                        <div className="card-body text-left">
+                        <h5 className="card-header bg-dark text-light">Register an account</h5>
+                        <div className="card-body bg-light text-left">
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Email address</label>

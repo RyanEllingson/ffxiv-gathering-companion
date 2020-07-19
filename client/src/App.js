@@ -12,6 +12,7 @@ import Items from "./components/Items";
 import Alarms from "./components/Alarms";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import "./app.css";
 const axios = require("axios");
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+      <nav className="navbar navbar-expand-lg navbar-dark border-bottom border-light mb-3">
         <Clock />
         {user ? <span className="text-light">Welcome {user}</span> : ""}
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

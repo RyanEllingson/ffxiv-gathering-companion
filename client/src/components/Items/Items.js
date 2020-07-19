@@ -72,10 +72,10 @@ const Items = function() {
             <div className="row mb-5">
                 <div className="col-12">
                     <div className="card text-center dropdown">
-                        <h4 className="card-header">
+                        <h4 className="card-header bg-dark text-light">
                             Find gatherables
                         </h4>
-                        <div className="card-body">
+                        <div className="card-body bg-light">
                             <h5 className="card-title">Click one of the buttons below to find items</h5>
                             <button className="btn btn-primary card-link mt-1 first" onClick={(e)=>getAllItems(e)}>Get all items</button>
                             <button className="btn btn-primary card-link mt-1 second" onClick={(e)=>getBotanyItems(e)}>Get all botany items</button>
@@ -97,7 +97,7 @@ const Items = function() {
                     <div class="card mb-5">
                         <ul class="list-group">
                             {items.map((item) => {
-                                return <li className="list-group-item">
+                                return <li className="list-group-item bg-light">
                                     <ItemCard
                                         key={item.id}
                                         aetheryte={item.aetheryte}
