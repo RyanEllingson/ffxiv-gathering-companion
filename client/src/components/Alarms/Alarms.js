@@ -62,6 +62,7 @@ const Alarms = function() {
 
     useEffect(() => {
         fetchAlarms();
+        // eslint-disable-next-line
     }, []);
 
 
@@ -120,7 +121,7 @@ const Alarms = function() {
                     <div class="card mb-5">
                         <ul class="list-group">
                             {alarms.map((alarm) => {
-                                return <li className="list-group-item">
+                                return <li className="list-group-item bg-light">
                                     <ItemCard
                                         key={alarm.id}
                                         aetheryte={alarm.aetheryte}
