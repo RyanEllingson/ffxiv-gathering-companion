@@ -88,10 +88,10 @@ const Alarms = function() {
             <div className="row">
                 <div className="col-12">
                     <div class="card mb-5">
-                        <h5 className="card-header text-center">Ready to Gather!</h5>
+                        <h5 className="card-header bg-dark text-light text-center">Ready to Gather!</h5>
                         <ul class="list-group">
                             {readyAlarms.map((alarm) => {
-                                return <li className="list-group-item">
+                                return <li className="list-group-item bg-light">
                                     <ItemCard
                                         key={alarm.id}
                                         aetheryte={alarm.aetheryte}

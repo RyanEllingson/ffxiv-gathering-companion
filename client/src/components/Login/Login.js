@@ -31,8 +31,8 @@ const Login = function() {
             <div className="row">
                 <div className="col-12">
                     <div className="card text-center">
-                        <h5 className="card-header">Login to your account</h5>
-                        <div className="card-body text-left">
+                        <h5 className="card-header bg-dark text-light">Login to your account</h5>
+                        <div className="card-body text-left bg-light">
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Email address</label>
