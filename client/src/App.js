@@ -12,7 +12,7 @@ import Items from "./components/Items";
 import Alarms from "./components/Alarms";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import "./app.css";
+import "./App.css";
 const axios = require("axios");
 
 function App() {
