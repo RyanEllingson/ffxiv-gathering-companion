@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../auth/auth";
 import "./ItemCard.css";
 const moment = require("moment");
