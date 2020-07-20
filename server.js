@@ -19,6 +19,7 @@ app.use(express.static(path.resolve(__dirname, "client", "build")));
 app.get("/api/items", orm.getAndReturnAllItems);
 app.get("/api/items/botany", orm.getAndReturnBotanyItems);
 app.get("/api/items/mining", orm.getAndReturnMiningItems);
+app.get("/api/items/ephemeral", orm.getAndReturnEphemeralItems);
 app.get("/api/items/:item", orm.findAndReturnItem);
 app.post("/api/register", orm.registerAndReturnUser);
 app.post("/api/login", orm.loginAndReturnUser);

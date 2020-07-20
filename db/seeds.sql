@@ -569,7 +569,7 @@ INSERT INTO items (item_name, image_url, discipline, region, coordinates, aether
 VALUES ("Bamboo Shoot", "https://xivapi.com/i/025000/025229.png", "botany", "Yanxia", "x: 28, y: 25", "Namai", "22:00", 2, "unspoiled");
 
 INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
-VALUES ("Raw Star Spinel", "https://xivapi.com/i/021000/021475.png", "botany", "Ruby Sea", "x: 15, y: 5", "Onokoro", "00:00", 2, "unspoiled");
+VALUES ("Raw Star Spinel", "https://xivapi.com/i/021000/021475.png", "mining", "Ruby Sea", "x: 15, y: 5", "Onokoro", "00:00", 2, "unspoiled");
 
 INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
 VALUES ("Raw Star Spinel", "https://xivapi.com/i/021000/021475.png", "mining", "Ruby Sea", "x: 15, y: 5", "Onokoro", "12:00", 2, "unspoiled");

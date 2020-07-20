@@ -41,6 +41,17 @@ const Items = function() {
         });
     };
 
+    const getEphemeralItems = function(event) {
+        event.preventDefault();
+        axios.get("/api/items/ephemeral")
+        .then((response) => {
+            setItems(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    };
+
     const searchForItem = function(event) {
         event.preventDefault();
         axios.get(`/api/items/${searchTerm}`)
@@ -80,7 +91,8 @@ const Items = function() {
                             <button className="btn btn-primary card-link mt-1 first" onClick={(e)=>getAllItems(e)}>Get all items</button>
                             <button className="btn btn-primary card-link mt-1 second" onClick={(e)=>getBotanyItems(e)}>Get all botany items</button>
                             <button className="btn btn-primary card-link mt-1 third" onClick={(e)=>getMiningItems(e)}>Get all mining items</button>
-                            <button className="btn btn-primary card-link mt-1 fourth" type="button" data-toggle="collapse" data-target="#collapseMenu" aria-haspopup="true" aria-expanded="false">Open search form</button>
+                            <button className="btn btn-primary card-link mt-1 fourth" onClick={(e)=>getEphemeralItems(e)}>Get all ephemeral nodes</button>
+                            <button className="btn btn-primary card-link mt-1 fifth" type="button" data-toggle="collapse" data-target="#collapseMenu" aria-haspopup="true" aria-expanded="false">Open search form</button>
                             <form className="collapse form-inline p-4" id="collapseMenu">
                                 <div className="form-group ml-auto">
                                     <label htmlFor="exampleDropdownFormEmail2">Find item by name</label>
