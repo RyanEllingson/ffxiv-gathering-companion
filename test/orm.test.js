@@ -90,7 +90,7 @@ describe("API routes", () => {
             await orm.getAndReturnBotanyItems(req, res);
             expect(res.json.mock.calls[0][0].length).toBe(2);
             expect(res.json.mock.calls[0][0][0].item_name).toBe("Fire Cluster");
-            expect(res.json.mock.calls[0][0][1].item_name).toBe("Rosemary");
+            expect(res.json.mock.calls[0][0][1].item_name).toBe("Windtea Leaves");
         });
     });
     describe("Get all mining items", () => {
@@ -103,6 +103,17 @@ describe("API routes", () => {
             expect(res.json.mock.calls[0][0].length).toBe(1);
             expect(res.json.mock.calls[0][0][0].item_name).toBe("Raw Ruby");
         });
+    });
+    describe("Get all ephemeral nodes", () => {
+        it("should find Windtea Leaves in the db", async () => {
+            res = {
+                json: jest.fn()
+            };
+
+            await orm.getAndReturnEphemeralItems(req, res);
+            expect(res.json.mock.calls[0][0].length).toBe(1);
+            expect(res.json.mock.calls[0][0][0].item_name).toBe("Windtea Leaves");
+        })
     });
     describe("Register new user", () => {
         it("should add a new user to the db and attach cookie session to request", async () => {
