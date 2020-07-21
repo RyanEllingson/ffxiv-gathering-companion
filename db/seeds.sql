@@ -999,3 +999,75 @@ VALUES ("Raw Onyx", "https://xivapi.com/i/021000/021231.png", "mining", "The Tem
 
 INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
 VALUES ("Shade Quartz", "https://xivapi.com/i/021000/021462.png", "mining", "Kholusia", "x: 22, y: 18", "Tomra", "16:00", 4, "ephemeral");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Tungsten Ore", "https://xivapi.com/i/021000/021203.png", "mining", "The Tempest", "x: 37, y: 9", "The Ondo Cups", "10:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Tungsten Ore", "https://xivapi.com/i/021000/021203.png", "mining", "The Tempest", "x: 37, y: 9", "The Ondo Cups", "22:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Prismstone", "https://xivapi.com/i/021000/021232.png", "mining", "Il Mheg", "x: 31, y: 19", "Wolekdorf", "04:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Prismstone", "https://xivapi.com/i/021000/021232.png", "mining", "Il Mheg", "x: 31, y: 19", "Wolekdorf", "16:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Beryllium Ore", "https://xivapi.com/i/021000/021455.png", "mining", "Il Mheg", "x: 31, y: 19", "Wolekdorf", "04:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Beryllium Ore", "https://xivapi.com/i/021000/021455.png", "mining", "Il Mheg", "x: 31, y: 19", "Wolekdorf", "16:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Fireheart Cobalt", "https://xivapi.com/i/021000/021226.png", "mining", "Lakeland", "x: 4, y: 33", "The Ostall Imperative", "02:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Fireheart Cobalt", "https://xivapi.com/i/021000/021226.png", "mining", "Lakeland", "x: 4, y: 33", "The Ostall Imperative", "14:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Purpure Shell Chip", "https://xivapi.com/i/021000/021469.png", "mining", "The Tempest", "x: 33, y: 30", "The Macarenses Angle", "06:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Purpure Shell Chip", "https://xivapi.com/i/021000/021469.png", "mining", "The Tempest", "x: 33, y: 30", "The Macarenses Angle", "18:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Ashen Alumen", "https://xivapi.com/i/022000/022604.png", "mining", "Amh Araeng", "x: 20, y: 10", "Mord Souq", "10:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Ashen Alumen", "https://xivapi.com/i/022000/022604.png", "mining", "Amh Araeng", "x: 20, y: 10", "Mord Souq", "22:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Sandalwood Log", "https://xivapi.com/i/022000/022401.png", "botany", "Rak'tika Greatwood", "x: 24, y: 36", "Slitherbough", "02:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Sandalwood Log", "https://xivapi.com/i/022000/022401.png", "botany", "Rak'tika Greatwood", "x: 24, y: 36", "Slitherbough", "14:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Sandalwood Sap", "https://xivapi.com/i/022000/022638.png", "botany", "Rak'tika Greatwood", "x: 24, y: 36", "Slitherbough", "02:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Sandalwood Sap", "https://xivapi.com/i/022000/022638.png", "botany", "Rak'tika Greatwood", "x: 24, y: 36", "Slitherbough", "14:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Merbau Log", "https://xivapi.com/i/022000/022423.png", "botany", "Il Mheg", "x: 35, y: 26", "Lydha Lran", "08:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Merbau Log", "https://xivapi.com/i/022000/022423.png", "botany", "Il Mheg", "x: 35, y: 26", "Lydha Lran", "20:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Ethereal Cocoon", "https://xivapi.com/i/021000/021661.png", "botany", "Lakeland", "x: 26, y: 11", "Fort Jobb", "08:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Ethereal Cocoon", "https://xivapi.com/i/021000/021661.png", "botany", "Lakeland", "x: 26, y: 11", "Fort Jobb", "20:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Duskblooms", "https://xivapi.com/i/025000/025022.png", "botany", "Amh Araeng", "x: 32, y: 33", "Inn at Journey's Head", "04:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Duskblooms", "https://xivapi.com/i/025000/025022.png", "botany", "Amh Araeng", "x: 32, y: 33", "Inn at Journey's Head", "16:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Imperial Fern", "https://xivapi.com/i/025000/025038.png", "botany", "Kholusia", "x: 28, y: 21", "Stilltide", "00:00", 2, "unspoiled");
+
+INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
+VALUES ("Imperial Fern", "https://xivapi.com/i/025000/025038.png", "botany", "Kholusia", "x: 28, y: 21", "Stilltide", "12:00", 2, "unspoiled");

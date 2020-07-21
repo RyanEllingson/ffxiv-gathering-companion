@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../auth/auth";
+import { createAlarm } from "../../functions/alarms";
 
-const AlarmModal = function({ id, name, handleClick }) {
+const AlarmModal = function({ id, name }) {
     const { user } = useContext(AuthContext);
     const [note, setNote] = useState("");
 
@@ -22,7 +23,7 @@ const AlarmModal = function({ id, name, handleClick }) {
                         </div>
                         <div className="modal-footer bg-light">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onClick={(e)=>handleClick(e, id, user, note)} data-dismiss="modal">Create alarm</button>
+                            <button type="button" class="btn btn-primary" onClick={(e)=>createAlarm(e, id, user, note)} data-dismiss="modal">Create alarm</button>
                         </div>
                     </div>
                 </div>
