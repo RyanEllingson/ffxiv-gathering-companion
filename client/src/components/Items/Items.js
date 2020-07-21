@@ -1,82 +1,13 @@
 import React, { useState } from "react";
 import ItemCard from "../ItemCard";
 import AlarmModal from "../AlarmModal";
+import { getAllItems, getBotanyItems, getMiningItems, getEphemeralItems, searchForItem } from "../../functions/items";
 import "./Items.css";
 const axios = require("axios");
 
 const Items = function() {
     const [searchTerm, setSearchTerm] = useState("");
     const [items, setItems] = useState(null);
-
-    const getAllItems = function(event) {
-        event.preventDefault();
-        axios.get("/api/items")
-        .then((response) => {
-            setItems(response.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    };
-
-    const getBotanyItems = function(event) {
-        event.preventDefault();
-        axios.get("/api/items/botany")
-        .then((response) => {
-            setItems(response.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    };
-
-    const getMiningItems = function(event) {
-        event.preventDefault();
-        axios.get("/api/items/mining")
-        .then((response) => {
-            setItems(response.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    };
-
-    const getEphemeralItems = function(event) {
-        event.preventDefault();
-        axios.get("/api/items/ephemeral")
-        .then((response) => {
-            setItems(response.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    };
-
-    const searchForItem = function(event) {
-        event.preventDefault();
-        axios.get(`/api/items/${searchTerm}`)
-        .then((response) => {
-            setItems(response.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    };
-
-    const createAlarm = function(event, id, email, note) {
-        event.preventDefault();
-        axios.post("/api/alarms", {
-            email: email,
-            itemId: id,
-            notes: note
-        })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    };
 
     return (
         <div className="container">
@@ -88,17 +19,17 @@ const Items = function() {
                         </h4>
                         <div className="card-body bg-light">
                             <h5 className="card-title">Click one of the buttons below to find items</h5>
-                            <button className="btn btn-primary card-link mt-1 first" onClick={(e)=>getAllItems(e)}>Get all items</button>
-                            <button className="btn btn-primary card-link mt-1 second" onClick={(e)=>getBotanyItems(e)}>Get all botany items</button>
-                            <button className="btn btn-primary card-link mt-1 third" onClick={(e)=>getMiningItems(e)}>Get all mining items</button>
-                            <button className="btn btn-primary card-link mt-1 fourth" onClick={(e)=>getEphemeralItems(e)}>Get all ephemeral nodes</button>
+                            <button className="btn btn-primary card-link mt-1 first" onClick={(e)=>getAllItems(e, setItems)}>Get all items</button>
+                            <button className="btn btn-primary card-link mt-1 second" onClick={(e)=>getBotanyItems(e, setItems)}>Get all botany items</button>
+                            <button className="btn btn-primary card-link mt-1 third" onClick={(e)=>getMiningItems(e, setItems)}>Get all mining items</button>
+                            <button className="btn btn-primary card-link mt-1 fourth" onClick={(e)=>getEphemeralItems(e, setItems)}>Get all ephemeral nodes</button>
                             <button className="btn btn-primary card-link mt-1 fifth" type="button" data-toggle="collapse" data-target="#collapseMenu" aria-haspopup="true" aria-expanded="false">Open search form</button>
                             <form className="collapse form-inline p-4" id="collapseMenu">
                                 <div className="form-group ml-auto">
                                     <label htmlFor="exampleDropdownFormEmail2">Find item by name</label>
                                     <input type="text" className="form-control mx-3" id="exampleDropdownFormEmail2" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} />
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-auto" onClick={(e)=>searchForItem(e)}>Search</button>
+                                <button type="submit" class="btn btn-primary mr-auto" onClick={(e)=>searchForItem(e, searchTerm, setItems)}>Search</button>
                             </form>
                         </div>
                     </div>
@@ -122,7 +53,7 @@ const Items = function() {
                                         region={item.region}
                                         start={item.start_time}
                                     >
-                                        <AlarmModal id={item.id} name={item.item_name} handleClick={createAlarm} />
+                                        <AlarmModal id={item.id} name={item.item_name} />
                                     </ItemCard>
                                 </li>
                             })}
