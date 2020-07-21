@@ -3,7 +3,6 @@ import ItemCard from "../ItemCard";
 import AlarmModal from "../AlarmModal";
 import { getAllItems, getBotanyItems, getMiningItems, getEphemeralItems, searchForItem } from "../../functions/items";
 import "./Items.css";
-const axios = require("axios");
 
 const Items = function() {
     const [searchTerm, setSearchTerm] = useState("");

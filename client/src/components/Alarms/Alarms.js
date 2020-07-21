@@ -3,8 +3,7 @@ import { AuthContext } from "../../auth/auth";
 import { TimeContext } from "../../time/time";
 import ItemCard from "../ItemCard";
 import { useHistory } from "react-router-dom";
-const axios = require("axios");
-const moment = require("moment");
+import { renderAlarms, fetchAlarms, deleteAlarm } from "../../functions/alarms";
 
 const Alarms = function() {
     const { user } = useContext(AuthContext);
@@ -17,38 +16,6 @@ const Alarms = function() {
         history.push("/");
     }
 
-    const renderAlarms = function(alarmArray) {
-        const newAlarms = [];
-        const activeAlarms = [];
-        const checkTime = moment(time.format("HH"), "HH");
-        for (let i=0; i<24; i++) {
-            for (let j=0; j<alarmArray.length; j++) {
-                if (checkTime.format("HH") === alarmArray[j].start_time.split(":")[0]) {
-                    if (isActive(alarmArray[j].start_time, alarmArray[j].duration)) {
-                        activeAlarms.push(alarmArray[j]);
-                    } else {
-                        newAlarms.push(alarmArray[j]);
-                    }
-                }
-            }
-            checkTime.add(1, "hours");
-        }
-        setAlarms(newAlarms);
-        setReadyAlarms(activeAlarms);
-    }
-
-    const fetchAlarms = function() {
-        axios.get(`/api/alarms/${user}`)
-        .then(function(response) {
-            if (!response.data.error) {
-                renderAlarms(response.data);
-            }
-        })
-        .catch(function(err) {
-            console.error(err);
-        });
-    };
-
     let delay = false;
 
     if (time.get("minutes") === 1 && !delay) {
@@ -56,33 +23,14 @@ const Alarms = function() {
         setTimeout(() => {
             delay = false;
             const alarmSet = readyAlarms.concat(alarms);
-            renderAlarms(alarmSet);
+            renderAlarms(alarmSet, setAlarms, setReadyAlarms, time);
         }, 3500);
     }
 
     useEffect(() => {
-        fetchAlarms();
+        fetchAlarms(setAlarms, setReadyAlarms, time, user);
         // eslint-disable-next-line
     }, []);
-
-
-    const deleteAlarm = function(event, id) {
-        event.preventDefault();
-        axios.delete(`/api/alarms/${id}`)
-        .then(function(response) {
-            fetchAlarms();
-        })
-        .catch(function(error) {
-            console.error(error);
-        });
-    };
-
-    const isActive = function(start, duration) {
-        const startTime = moment(start, "H:mm");
-        const endTime = moment(start, "H:mm");
-        endTime.add(duration, "hours");
-        return startTime < time && time < endTime;
-    }
 
     return (
         <div className="container">
@@ -107,7 +55,7 @@ const Alarms = function() {
                                         notes={alarm.notes}
                                     >
                                         <div className="col-5 col-sm-4 col-md-3 text-right">
-                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id)}}>Delete alarm</button>
+                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id, setAlarms, setReadyAlarms)}}>Delete alarm</button>
                                         </div>
                                     </ItemCard>
                                 </li>
@@ -136,7 +84,7 @@ const Alarms = function() {
                                         notes={alarm.notes}
                                     >
                                         <div className="col-5 col-sm-4 col-md-3 text-right">
-                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id)}}>Delete alarm</button>
+                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id, setAlarms, setReadyAlarms)}}>Delete alarm</button>
                                         </div>
                                     </ItemCard>
                                 </li>
