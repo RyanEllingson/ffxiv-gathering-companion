@@ -1,5 +1,7 @@
 # Final Fantasy XIV Gathering Companion
 
+[![Build Status](https://travis-ci.com/RyanEllingson/ffxiv-gathering-companion.png?branch=master)](https://travis-ci.com/RyanEllingson/ffxiv-gathering-companion)
+
 Check out the deployed app at https://ffxiv-gathering-companion.herokuapp.com/
 
 This app is intended to help gatherers in Final Fantasy XIV locate unspoiled and ephemeral botany and mining nodes, as well as alert them when desired items are available to be gathered in-game.  The app is especially designed to help users plot out intense gathering sessions involving multiple unspoiled or ephemeral nodes (for farming gatherers' scrips for example) by allowing users to create "alarms" for any number of different items and displaying them in the order in which they will next become available to gather.
