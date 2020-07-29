@@ -9,7 +9,7 @@ export const createAlarm = function(event, id, email, note) {
         notes: note
     })
     .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
     })
     .catch((err) => {
         console.error(err);
@@ -55,11 +55,11 @@ export const fetchAlarms = function(setAlarms, setReadyAlarms, time, user) {
     });
 };
 
-export const deleteAlarm = function(event, id, setAlarms, setReadyAlarms) {
+export const deleteAlarm = function(event, id, setAlarms, setReadyAlarms, time, user) {
     event.preventDefault();
     axios.delete(`/api/alarms/${id}`)
     .then(function(response) {
-        fetchAlarms(setAlarms, setReadyAlarms);
+        fetchAlarms(setAlarms, setReadyAlarms, time, user);
     })
     .catch(function(error) {
         console.error(error);

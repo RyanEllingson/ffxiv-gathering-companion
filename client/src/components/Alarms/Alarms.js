@@ -55,7 +55,7 @@ const Alarms = function() {
                                         notes={alarm.notes}
                                     >
                                         <div className="col-5 col-sm-4 col-md-3 text-right">
-                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id, setAlarms, setReadyAlarms)}}>Delete alarm</button>
+                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id, setAlarms, setReadyAlarms, time, user)}}>Delete alarm</button>
                                         </div>
                                     </ItemCard>
                                 </li>
@@ -84,7 +84,7 @@ const Alarms = function() {
                                         notes={alarm.notes}
                                     >
                                         <div className="col-5 col-sm-4 col-md-3 text-right">
-                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id, setAlarms, setReadyAlarms)}}>Delete alarm</button>
+                                            <button className="btn btn-danger" onClick={(e)=>{deleteAlarm(e, alarm.id, setAlarms, setReadyAlarms, time, user)}}>Delete alarm</button>
                                         </div>
                                     </ItemCard>
                                 </li>
