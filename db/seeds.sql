@@ -1124,10 +1124,10 @@ INSERT INTO items (item_name, image_url, discipline, region, coordinates, aether
 VALUES ("Rarefied Abalathian Spring Water", "https://xivapi.com/i/022000/022614.png", "mining", "The Sea of Clouds", "x: 21, y: 12", "Ok' Zundu", "14:00", 2, "unspoiled");
 
 INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
-VALUES ("Rarefied Aurum Regis Sand", "https://xivapi.com/i/022000/021220.png", "mining", "The Sea of Clouds", "x: 21, y: 12", "Ok' Zundu", "02:00", 2, "unspoiled");
+VALUES ("Rarefied Aurum Regis Sand", "https://xivapi.com/i/021000/021220.png", "mining", "The Sea of Clouds", "x: 21, y: 12", "Ok' Zundu", "02:00", 2, "unspoiled");
 
 INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
-VALUES ("Rarefied Aurum Regis Sand", "https://xivapi.com/i/022000/021220.png", "mining", "The Sea of Clouds", "x: 21, y: 12", "Ok' Zundu", "14:00", 2, "unspoiled");
+VALUES ("Rarefied Aurum Regis Sand", "https://xivapi.com/i/021000/021220.png", "mining", "The Sea of Clouds", "x: 21, y: 12", "Ok' Zundu", "14:00", 2, "unspoiled");
 
 INSERT INTO items (item_name, image_url, discipline, region, coordinates, aetheryte, start_time, duration, node_type)
 VALUES ("Rarefied Raw Triphane", "https://xivapi.com/i/021000/021474.png", "mining", "The Fringes", "x: 30, y: 13", "The Peering Stones", "08:00", 2, "unspoiled");
